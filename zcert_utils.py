@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import shutil
+import os
 
 '''
 Используется для прохождении аутентификации на сайте zerocert.
