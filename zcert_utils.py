@@ -8,13 +8,14 @@ import shutil
 # TODO: Добавить создание папок автоматически в зависимости от названия сайта. Так же добавить проверку на существование.
 # TODO: Добавить аргументы командной строки. Удаление файлов, путь к файлу с данными, создание конфига nginx
 # TODO: Может быть имеет смысл вынести в классы, часть функций.
-import os
+import shutil
 
 file_name = os.path.join('data.txt')
 
 def clear_folder(file_dict):
-    for val_list in file_dict.items():
-        print(val_list)
+    for key, val_list in file_dict.items():
+        shutil.rmtree(val_list[1])
+
 
 def create_dict_from_file(file):
     '''Принимает имя файла, возвращает словарь вида
