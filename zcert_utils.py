@@ -1,46 +1,49 @@
 #!/usr/bin/env python3
+import shutil
+
 '''
 Используется для прохождении аутентификации на сайте zerocert.
-Берет фаил с ключами - на текущай момент data.txt и раскладывает ключи по папка
+Берет фаил с ключами - на текущай момент data.txt и раскладывает ключи по папкам
 '''
-#TODO: Добавить создание папок автоматически в зависимости от названия сайта. Так же добавить проверку на существование.
-#TODO: Добавить аргументы командной строки. Удаление файлов, путь к файлу с данными, создание конфига nginx
-
+# TODO: Добавить создание папок автоматически в зависимости от названия сайта. Так же добавить проверку на существование.
+# TODO: Добавить аргументы командной строки. Удаление файлов, путь к файлу с данными, создание конфига nginx
+# TODO: Может быть имеет смысл вынести в классы, часть функций.
 import os
 
-file = os.path.join('data.txt')
+file_name = os.path.join('data.txt')
 
+def clear_folder(file_dict):
+    for val_list in file_dict.items():
+        print(val_list)
 
-def read_from_file(file):
-    with open(file, 'r+', encoding='utf-8')as f:
-        key = None
+def create_dict_from_file(file):
+    '''Принимает имя файла, возвращает словарь вида
+    (site_name: [путь к папке в которой размещается фаил, имя файла, ключ])'''
+    file_dict = {}
+    with open(file, 'r', encoding='utf-8')as f:
         for line in f:
             data_str = line.split()
-            if data_str[0] == 'Текст:':
-                key = data_str[1]
-                write_to_files(path, key)
-            else:
-                site_name = data_str[0]
+            if data_str[0] != 'Текст:':
                 link = data_str[1]
-                path = '/var/www/{}/.well-known/acme-challenge/{}'.format(site_name, link)
+                site_name = data_str[0]
+                path = '/var/www/{}/.well-known/acme-challenge/'.format(site_name, link)
+                file_dict.update({site_name: ''})
+            elif data_str[0] == 'Текст:':
+                key = data_str[1]
+                file_dict.update({site_name: [path, link, key]})
+            # print(file_dict)
+    return file_dict
 
 
-#                path_tmp = '/' + os.path.join(path_tmp.split('/'))
-#                print(path_tmp)
-#                print(key)
-#                write_to_files(path, key)
-#                key = None
-
-
-def write_to_files(filename, key):
-    with open(filename, 'w', encoding='utf-8') as f:
-        f.write(str(key))
-
-
-# def del_file_exist(filename)
-#     if os.path.isfile(filename):
-#         os.remove(filename)
+def write_to_files(file_dict):
+    '''Записывает данный в фаил из словаря'''
+    for key, val_list in file_dict.items():
+        path = val_list[0] + val_list[1]
+        with open(path) as f:
+            f.write(val_list[2])
 
 
 if __name__ == '__main__':
-    read_from_file(file)
+    file_dict = create_dict_from_file(file_name)
+    # write_to_files(file_dict)
+    clear_folder(file_dict)
