@@ -16,11 +16,10 @@ file_name = os.path.join('data.txt')
 
 def clear_folder(file_dict):
     for key, val_list in file_dict.items():
-        # shutil.rmtree(val_list[0])
-        # print(os.listdir(val_list[0]))
         file_list = [f for f in os.listdir(val_list[0])]
         for f in file_list:
-            os.remove(os.path.join(val_list[0], f))
+            print(os.path.join(val_list[0], f))
+            # os.remove(os.path.join(val_list[0], f))
 
 
 def create_folder_in_www(file_dict):
