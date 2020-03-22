@@ -13,14 +13,17 @@ import shutil
 
 file_name = os.path.join('data.txt')
 
+
 def clear_folder(file_dict):
     for key, val_list in file_dict.items():
         # shutil.rmtree(val_list[0])
         print(os.listdir(val_list[0]))
 
+
 def create_folder_in_www(file_dict):
     for key, val_list in file_dict.items():
-        os.mkdir(val_list[0])
+        os.makedirs(val_list[0], mode=0o755, exist_ok=True)
+
 
 def create_dict_from_file(file):
     '''Принимает имя файла, возвращает словарь вида
