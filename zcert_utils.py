@@ -10,8 +10,8 @@ import os
 # TODO: Добавить аргументы командной строки. Удаление файлов, путь к файлу с данными, создание конфига nginx
 # TODO: Может быть имеет смысл вынести в классы, часть функций.
 
-parser = argparse.ArgumentParser(description='Парсер входящих аргументов'
-                                             '')
+parser = argparse.ArgumentParser(description='Парсер входящих аргументов')
+parser.add_argument('-d', '--delete', type=str, help= 'Удаляет файлы в директории')
 file_name = os.path.join('data.txt')
 
 
