@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import shutil
+import argparse
 import os
 
 '''
@@ -9,8 +9,9 @@ import os
 # TODO: Добавить создание папок автоматически в зависимости от названия сайта. Так же добавить проверку на существование.
 # TODO: Добавить аргументы командной строки. Удаление файлов, путь к файлу с данными, создание конфига nginx
 # TODO: Может быть имеет смысл вынести в классы, часть функций.
-import shutil
 
+parser = argparse.ArgumentParser(description='Парсер входящих аргументов'
+                                             '')
 file_name = os.path.join('data.txt')
 
 
