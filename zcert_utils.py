@@ -58,5 +58,5 @@ def write_to_files(file_dict):
 if __name__ == '__main__':
     file_dict = create_dict_from_file(file_name)
     # create_folder_in_www(file_dict)
-    # write_to_files(file_dict)
-    clear_folder(file_dict)
+    write_to_files(file_dict)
+    # clear_folder(file_dict)
