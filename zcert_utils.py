@@ -51,7 +51,7 @@ def write_to_files(file_dict):
     '''Записывает данный в фаил из словаря'''
     for key, val_list in file_dict.items():
         path = val_list[0] + val_list[1]
-        with open(path) as f:
+        with open(path, 'w+', encoding='utf-8') as f:
             f.write(val_list[2])
 
 
