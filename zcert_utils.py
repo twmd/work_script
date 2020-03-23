@@ -57,7 +57,7 @@ if __name__ == '__main__':
     file_dict = create_dict_from_file(file_name)
     parser = argparse.ArgumentParser(description='Парсер входящих аргументов')
     parser.add_argument('-d', action='store_true', help='Удаляет файлы в каталогах')
-    parser.add_argument('-с', action='store_true', help='Создает каталоги, при указании этой опции')
+    parser.add_argument('-c', action='store_true', help='Создает каталоги, при указании этой опции')
     args = parser.parse_args()
     if args.d:
         clear_folder(file_dict)
