@@ -11,6 +11,23 @@ import os
 # TODO: Может быть имеет смысл вынести в классы, часть функций.
 
 file_name = os.path.join('data.txt')
+NGINX_CONF_PATH = '/etc/nginx/conf.d/'
+
+
+def create_nginx_conf_file(file_dict):
+    conf_nginx_string = '''server {{
+        listen   80;
+        server_name {0} www.{0};
+        location ^~ /.well-known/acme-challenge/ {{
+                root /var/www/{0}/;
+                allow all;
+                try_files $uri =404;
+        }}
+}}'''.format(name)
+    for key, value in file_dict.items():
+        name = key
+        with open('tst.txt', 'w+', encoding='utf-8') as f:
+            f.write(conf_nginx_string)
 
 
 def clear_folder(file_dict):
