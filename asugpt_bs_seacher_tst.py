@@ -1,4 +1,3 @@
 import os
-for f in os.listdir("/opt"):
-    if f.endswith('*.log'):
-        print(f)
+for root, dirs, files in os.walk("/opt"):
+    print(root)
