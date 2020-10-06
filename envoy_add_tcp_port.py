@@ -1,5 +1,7 @@
 import os
-
+#TODO: Добавить проверку на существование файлов
+#TODO: Добавить проверку на то что порт является числовым значением
+#TODO: Удалить темвой файли после совмещения
 file_name = 'envoy_test.yaml'
 file_path = os.path.join(file_name)
 file_path_tmp = os.path.join('cluster_tmp.yaml')
