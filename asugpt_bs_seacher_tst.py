@@ -7,7 +7,8 @@ def search_log_files():
             if file.endswith(".log"):
                 #print(os.path.join(root, file))
                 log_files_list.append(os.path.join(root, file))
-        print(log_files_list)
+        for i in log_files_list:
+            print(i)
 
 if __name__ == '__main__':
     search_log_files()
