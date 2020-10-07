@@ -2,11 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import os
-#TODO: Добавить проверку на существование файлов
 #TODO: Добавить проверку на то что порт является числовым значением
-#TODO: Удалить темвой файли после совмещения
-file_name = 'envoy_listener_tmp.yaml'
+file_name = (input('Введите название файла конфигурации:'))
 file_path = os.path.join(file_name)
+#TODO Вынести куда нибудь.
+#Проверка существования файлов
+if os.path.isfile(file_path):
+    os.remove(file_path)
+
 file_path_tmp = os.path.join('envoy_cluster_tmp.yaml')
 listener_name = ''
 port_number = 0
@@ -55,17 +58,27 @@ clusters_name_template = '''
         address: 192.168.107.68
         port_value: {1}
 '''
+#Записывает административную секцию
 def write_admin_section(file_path):
     with open(file_path, 'a', encoding='UTF-8') as f:
         f.write(admin_template)
-
+#Записывает секцию Listener
 def write_listener_section(file_path, listener_name, port_number):
     with open(file_path, 'a', encoding='UTF-8') as f:
         f.write(listeners_name_template.format(listener_name, port_number))
-
+#Создает временный фаил с секцией cluster
 def write_cluster_section(file_path_tmp, listener_name, port_number):
     with open(file_path_tmp, 'a', encoding='UTF-8') as f:
         f.write(clusters_name_template.format(listener_name, port_number))
+#Объединяет файлы
+def union_file (file_path, file_path_tmp):
+    with open(file_path, 'a', encoding='UTF-8') as in_f:
+        in_f.write('\n  clusters:')
+    with open(file_path_tmp, 'r', encoding='UTF-8') as out_f:
+        for line in out_f:
+            with open(file_path, 'a', encoding='UTF-8') as in_f:
+                in_f.write(line)
+    os.remove(file_path_tmp)
 
 if __name__ == '__main__':
     write_admin_section(file_path)
@@ -80,3 +93,4 @@ if __name__ == '__main__':
             port_number = None
         else:
             break
+    union_file(file_path, file_path_tmp)
