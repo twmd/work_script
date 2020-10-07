@@ -5,9 +5,9 @@ import os
 #TODO: Добавить проверку на существование файлов
 #TODO: Добавить проверку на то что порт является числовым значением
 #TODO: Удалить темвой файли после совмещения
-file_name = 'envoy_test.yaml'
+file_name = 'envoy_listener_tmp.yaml'
 file_path = os.path.join(file_name)
-file_path_tmp = os.path.join('cluster_tmp.yaml')
+file_path_tmp = os.path.join('envoy_cluster_tmp.yaml')
 listener_name = ''
 port_number = 0
 admin_template ='''
@@ -48,7 +48,6 @@ listeners_name_template = '''
               path: /var/log/envoy/{0}.log'''
 
 clusters_name_template = '''
-  clusters:
   - name: {0}
     connect_timeout: 5s
     hosts:
@@ -70,8 +69,8 @@ def write_cluster_section(file_path_tmp, listener_name, port_number):
 
 if __name__ == '__main__':
     write_admin_section(file_path)
+    print('Вводите имя Listener и имя порта. Для выхода оставте имя Listener пустым и нажмите Enter')
     while True:
-        print('Вводите имя Listener и имя порта. Для выхода оставте имя Listener пустым и нажмите Enter')
         listener_name = input('Введите имя Listener:')
         if listener_name:
             port_number = input('Введите номер порта:')
