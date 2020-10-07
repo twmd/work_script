@@ -25,13 +25,3 @@ def search_uin_bs_in_files(log_file_list):
 if __name__ == '__main__':
     search_uin_bs_in_files(search_log_files())
 
-'''
-with open('C:\Dialog\Dialog.txt', 'r') as file:
-    flag = False
-    for line in file:
-        if flag:
-           print(line)
-           break
-        if a.lower() in line:
-           flag = True
-           '''

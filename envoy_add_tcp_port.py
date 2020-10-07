@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import os
 #TODO: Добавить проверку на существование файлов
 #TODO: Добавить проверку на то что порт является числовым значением
@@ -45,6 +48,7 @@ listeners_name_template = '''
               path: /var/log/envoy/{0}.log'''
 
 clusters_name_template = '''
+  clusters:
   - name: {0}
     connect_timeout: 5s
     hosts:
@@ -67,7 +71,13 @@ def write_cluster_section(file_path_tmp, listener_name, port_number):
 if __name__ == '__main__':
     write_admin_section(file_path)
     while True:
+        print('Вводите имя Listener и имя порта. Для выхода оставте имя Listener пустым и нажмите Enter')
         listener_name = input('Введите имя Listener:')
-        port_number = input('Введите номер порта:')
-        write_listener_section(file_path, listener_name, port_number)
-        write_cluster_section(file_path_tmp, listener_name, port_number)
+        if listener_name:
+            port_number = input('Введите номер порта:')
+            write_listener_section(file_path, listener_name, port_number)
+            write_cluster_section(file_path_tmp, listener_name, port_number)
+            listener_name = None
+            port_number = None
+        else:
+            break
