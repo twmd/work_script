@@ -17,18 +17,20 @@ def search_log_files():
 #Ищет совпадения в файле
 def search_uin_bs_in_files(log_file_list):
     a = '(EquipmentUin{0; 9129}'
+    last_log_date = '1970-01-01 10:00:00'
     for file in log_file_list:
         with open(file, 'r') as f:
             for line in f:
                 if a in line:
                     # print(line)
                     # print(file)
-                    search_last_date(line)
+                    print(search_last_date())
 
 def search_last_date(log_string):
     regex_date = re.compile('\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}')
     date_match = re.search(regex_date, log_string)
-    print(date_match.group())
+    return date_match.group()
+
 
 
 if __name__ == '__main__':
