@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#TODO: Дописать если uin не нашелся
+# TODO: Дописать если uin не нашелся
 
 import os
 import re
@@ -13,7 +13,7 @@ def search_log_files():
     log_files_list = []
     for root, dirs, files in os.walk("/opt"):
         for file in files:
-            if file.endswith(".log"):
+            if '.log' in str(file):
                 # print(os.path.join(root, file))
                 log_files_list.append(os.path.join(root, file))
     return log_files_list
@@ -23,7 +23,7 @@ def search_log_files():
 def search_uin_bs_in_files(log_file_list):
     UIN = input('Введите UIN:')
     UIN_strig = '(EquipmentUin{{0; {0}}}'.format(UIN)
-    #Новая дата в log файле
+    # Новая дата в log файле
     last_log_date = datetime.strptime('1970-01-01 10:00:00', '%Y-%m-%d %H:%M:%S')
     gprs_control = ''
     for file in log_file_list:
