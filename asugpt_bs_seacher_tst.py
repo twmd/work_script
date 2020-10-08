@@ -31,7 +31,7 @@ def search_uin_bs_in_files(log_file_list):
                 if UIN_strig in line:
                     date_from_log = search_last_date(line)
                     if compate_date(last_log_date, date_from_log):
-                        last_log_date = date_from_log
+                        last_log_date = datetime.strptime(date_from_log, '%Y-%m-%d %H:%M:%S')
                         gprs_control = file
     return last_log_date, gprs_control
 
@@ -46,18 +46,11 @@ def search_last_date(log_string):
 # сравнивает дату, и True если дата лога больше.
 def compate_date(cur_date, log_date):
     log_date = datetime.strptime(log_date, '%Y-%m-%d %H:%M:%S')
-    print(cur_date)
-    print(type(cur_date))
-    print(log_date)
-    print(type(log_date))
-
-    return True
-
-    # if cur_date < log_date:
-    #     return True
-    # else:
-    #     return False
+    if cur_date < log_date:
+        return True
+    else:
+        return False
 
 
 if __name__ == '__main__':
-    search_uin_bs_in_files(search_log_files())
+    print(search_uin_bs_in_files(search_log_files()))
