@@ -20,8 +20,8 @@ def search_log_files():
 
 # Ищет совпадения в файле
 def search_uin_bs_in_files(log_file_list):
-
-    UIN_strig = '(EquipmentUin{0; 9129}'
+    UIN = input('Введите UIN:')
+    UIN_strig = '(EquipmentUin{{0; {0}}}'.format(UIN)
     #Новая дата в log файле
     last_log_date = datetime.strptime('1970-01-01 10:00:00', '%Y-%m-%d %H:%M:%S')
     gprs_control = ''
