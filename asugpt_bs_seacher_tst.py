@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import os
@@ -12,7 +12,7 @@ def search_log_files():
                 #print(os.path.join(root, file))
                 log_files_list.append(os.path.join(root, file))
     return log_files_list
-
+#Ищет совпадения в файле
 def search_uin_bs_in_files(log_file_list):
     a = '(EquipmentUin{0; 9129}'
     for file in log_file_list:
@@ -20,6 +20,7 @@ def search_uin_bs_in_files(log_file_list):
             for line in f:
                 if a in line:
                     print(line)
+                    print(file)
 
 
 if __name__ == '__main__':
