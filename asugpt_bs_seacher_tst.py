@@ -46,10 +46,14 @@ def search_last_date(log_string):
 # сравнивает дату, и True если дата лога больше.
 def compate_date(cur_date, log_date):
     log_date = datetime.strptime(log_date, '%Y-%m-%d %H:%M:%S')
-    if cur_date < log_date:
-        return True
-    else:
-        return False
+    print(type(cur_date))
+    print(type(log_date))
+    return True
+
+    # if cur_date < log_date:
+    #     return True
+    # else:
+    #     return False
 
 
 if __name__ == '__main__':
