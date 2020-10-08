@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#TODO: Дописать если uin не нашелся
 
 import os
 import re
@@ -33,7 +34,7 @@ def search_uin_bs_in_files(log_file_list):
                     if compate_date(last_log_date, date_from_log):
                         last_log_date = datetime.strptime(date_from_log, '%Y-%m-%d %H:%M:%S')
                         gprs_control = file
-    return last_log_date, gprs_control
+    return UIN, last_log_date, gprs_control
 
 
 # выбирает дату из строки
