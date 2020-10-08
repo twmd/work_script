@@ -24,7 +24,7 @@ def search_uin_bs_in_files(log_file_list):
                 if a in line:
                     # print(line)
                     # print(file)
-                    print(search_last_date())
+                    print(search_last_date(line))
 
 def search_last_date(log_string):
     regex_date = re.compile('\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}')
