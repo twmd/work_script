@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
+from datetime import datetime
 #Ишет файлы с расширение log, и записывает их названия в список
 #TODO: Дописать что бы искал только Debug_Log
 def search_log_files():
@@ -19,8 +21,14 @@ def search_uin_bs_in_files(log_file_list):
         with open(file, 'r') as f:
             for line in f:
                 if a in line:
-                    print(line)
-                    print(file)
+                    # print(line)
+                    # print(file)
+                    search_last_date(line)
+
+def search_last_date(log_string):
+    regex_date = re.compile('\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}')
+    date_match = re.search(regex_date, log_string)
+    print(date_match.group())
 
 
 if __name__ == '__main__':
