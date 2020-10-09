@@ -58,6 +58,7 @@ def compate_date(cur_date, log_date):
         return True
     else:
         return False
+#Заменяет путь к файлу логов, на название control
 def rename_gprs_control(gpts_control):
     gprs_control_list = ['gprscontrol_18221', 'gprscontrol_egts_gmon', 'gprscontrol_egts_prod', 'gprscontrol_egts_vega',
                          'gprscontrol_rs_old', 'gprscontrol_sec2', 'gprscontrol_stst', 'gprscontrol_18231',
@@ -67,10 +68,15 @@ def rename_gprs_control(gpts_control):
     for i in gprs_control_list:
         if i in gpts_control:
             return i
+#Проверяет существование файла, если есть удаляет.
+def file_is_exec(file):
+    if os.path.isfile(file):
+        os.remove(file)
 
 if __name__ == '__main__':
     # print(search_uin_bs_in_files(search_log_files()))
     gprs_control = ''
+    file_is_exec(report_uin.txt)
     with open ('bo_uin.txt', 'r', encoding='UTF-8') as f_uin:
         for line in f_uin:
             cur_uin = line
