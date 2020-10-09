@@ -54,4 +54,8 @@ def compate_date(cur_date, log_date):
 
 
 if __name__ == '__main__':
-    print(search_uin_bs_in_files(search_log_files()))
+    # print(search_uin_bs_in_files(search_log_files()))
+    with open ('bo_uin.txt', 'r', encoding='UTF-8') as f:
+        for line in f:
+            cur_uin = line
+            print(cur_uin)
