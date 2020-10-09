@@ -66,7 +66,8 @@ if __name__ == '__main__':
     with open ('bo_uin.txt', 'r', encoding='UTF-8') as f_uin:
         for line in f_uin:
             cur_uin = line
-            cur_uin.replace(' ', '')
+            # cur_uin.replace(' ', '')
+            cur_uin = re.sub("^\s+|\n|\r|\s+$", '', cur_uin)
             print(cur_uin)
             gprs_control = search_uin_bs_in_files(search_log_files(), cur_uin)
             with open ('report_uin.txt', 'w', encoding='UTF-8') as f_report:
