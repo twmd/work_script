@@ -61,6 +61,6 @@ if __name__ == '__main__':
             cur_uin = line
             gprs_control = search_uin_bs_in_files(search_log_files(), cur_uin)
             with open ('report_uin.txt', 'w', encoding='UTF-8') as f_report:
-                cur_time = 'datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")'
+                cur_time = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
                 f_report.write('{0} | {1} | {2}'.format(str(cur_time), cur_uin, gprs_control))
-
+                print('{0} | {1} | {2}'.format(str(cur_time), cur_uin, gprs_control))
