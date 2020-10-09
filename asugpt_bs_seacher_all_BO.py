@@ -58,7 +58,15 @@ def compate_date(cur_date, log_date):
         return True
     else:
         return False
-
+def rename_gprs_control(gpts_control):
+    gprs_control_list = ['gprscontrol_18221', 'gprscontrol_egts_gmon', 'gprscontrol_egts_prod', 'gprscontrol_egts_vega',
+                         'gprscontrol_rs_old', 'gprscontrol_sec2', 'gprscontrol_stst', 'gprscontrol_18231',
+                         'gprscontrol_egts_h2h_gpos', 'gprscontrol_egts_ritm', 'gprscontrol_ritm', 'gprscontrol_sc',
+                         'gprscontrol_sec3', 'gprscontrol_ark', 'gprscontrol_egts_mircom', 'gprscontrol_egts_test',
+                         'gprscontrol_rs', 'gprscontrol_sec', 'gprscontrol_sms']
+    for i in gprs_control_list:
+        if i in gpts_control:
+            return i
 
 if __name__ == '__main__':
     # print(search_uin_bs_in_files(search_log_files()))
@@ -70,6 +78,7 @@ if __name__ == '__main__':
             cur_uin = re.sub("^\s+|\n|\r|\s+$", '', cur_uin)
             # print(cur_uin)
             gprs_control = search_uin_bs_in_files(search_log_files(), cur_uin)
+            gprs_control = rename_gprs_control(gprs_control)
             with open ('report_uin.txt', 'a', encoding='UTF-8') as f_report:
                 cur_time = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
                 f_report.write('{0} | {1} | {2}\n'.format(str(cur_time), cur_uin, gprs_control))
