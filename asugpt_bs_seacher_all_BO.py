@@ -76,7 +76,8 @@ def file_is_exec(file):
 if __name__ == '__main__':
     # print(search_uin_bs_in_files(search_log_files()))
     gprs_control = ''
-    file_is_exec(report_uin.txt)
+    file_is_exec('report_uin.txt')
+    file_is_exec('no_gprs_in_log.txt')
     with open ('bo_uin.txt', 'r', encoding='UTF-8') as f_uin:
         for line in f_uin:
             cur_uin = line
@@ -84,10 +85,16 @@ if __name__ == '__main__':
             cur_uin = re.sub("^\s+|\n|\r|\s+$", '', cur_uin)
             # print(cur_uin)
             gprs_control = search_uin_bs_in_files(search_log_files(), cur_uin)
-            gprs_control = rename_gprs_control(gprs_control)
-            with open ('report_uin.txt', 'a', encoding='UTF-8') as f_report:
-                cur_time = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
-                f_report.write('{0} | {1} | {2}\n'.format(str(cur_time), cur_uin, gprs_control))
-                print('{0} | {1} | {2}'.format(str(cur_time), cur_uin, gprs_control))
+            #Если gpts_control не пустой, то пишем данные
+            if gprs_control:
+                gprs_control = rename_gprs_control(gprs_control)
+                with open ('report_uin.txt', 'a', encoding='UTF-8') as f_report:
+                    cur_time = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
+                    f_report.write('{0} | {1} | {2}\n'.format(str(cur_time), cur_uin, gprs_control))
+                    print('{0} | {1} | {2}'.format(str(cur_time), cur_uin, gprs_control))
+            #Иначе заносим в фаил с исключениями
+            else:
+                with open('no_gprs_in_log.txt', 'a', encoding='UTF-8') as f_no_gprs:
+                    f_no_gprs.write(cur_uin'\n')
     with open('report_uin.txt', 'a', encoding='UTF-8') as f_report:
         f_report.write('END OF WORK')
