@@ -20,8 +20,8 @@ def search_log_files():
 
 
 # Ищет совпадения в файле
-def search_uin_bs_in_files(log_file_list):
-    UIN = input('Введите UIN:')
+def search_uin_bs_in_files(log_file_list, UIN):
+    # UIN = input('Введите UIN:')
     UIN_strig = '(EquipmentUin{{0; {0}}}'.format(UIN)
     # Новая дата в log файле
     last_log_date = datetime.strptime('1970-01-01 10:00:00', '%Y-%m-%d %H:%M:%S')
@@ -34,7 +34,7 @@ def search_uin_bs_in_files(log_file_list):
                     if compate_date(last_log_date, date_from_log):
                         last_log_date = datetime.strptime(date_from_log, '%Y-%m-%d %H:%M:%S')
                         gprs_control = file
-    return UIN, last_log_date, gprs_control
+    return gprs_control
 
 
 # выбирает дату из строки
@@ -55,7 +55,12 @@ def compate_date(cur_date, log_date):
 
 if __name__ == '__main__':
     # print(search_uin_bs_in_files(search_log_files()))
-    with open ('bo_uin.txt', 'r', encoding='UTF-8') as f:
-        for line in f:
+    gprs_control = ''
+    with open ('bo_uin.txt', 'r', encoding='UTF-8') as f_uin:
+        for line in f_uin:
             cur_uin = line
-            print(cur_uin)
+            gprs_control = search_uin_bs_in_files(search_log_files(), cur_uin)
+            with open ('report_uin.txt', 'w', encoding='UTF-8') as f_report:
+                cur_time = 'datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")'
+                f_report.write('{0} | {1} | {2}'.format(str(cur_time), cur_uin, gprs_control))
+
