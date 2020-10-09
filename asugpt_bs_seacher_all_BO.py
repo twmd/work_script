@@ -74,3 +74,5 @@ if __name__ == '__main__':
                 cur_time = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
                 f_report.write('{0} | {1} | {2}'.format(str(cur_time), cur_uin, gprs_control))
                 print('{0} | {1} | {2}'.format(str(cur_time), cur_uin, gprs_control))
+    with open('report_uin.txt', 'a', encoding='UTF-8') as f_report:
+        f_report.write('END OF WORK')
