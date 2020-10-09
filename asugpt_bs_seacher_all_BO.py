@@ -90,11 +90,13 @@ if __name__ == '__main__':
                 gprs_control = rename_gprs_control(gprs_control)
                 with open ('report_uin.txt', 'a', encoding='UTF-8') as f_report:
                     cur_time = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
-                    f_report.write('{0} | {1} | {2}\n'.format(str(cur_time), cur_uin, gprs_control))
-                    print('{0} | {1} | {2}'.format(str(cur_time), cur_uin, gprs_control))
+                    # f_report.write('{0} | {1} | {2}\n'.format(str(cur_time), cur_uin, gprs_control))
+                    f_report.write('{0} | {1}\n'.format(cur_uin, gprs_control))
+                    # print('{0} | {1} | {2}'.format(str(cur_time), cur_uin, gprs_control))
+                    print('{0} | {1}'.format(cur_uin, gprs_control))
             #Иначе заносим в фаил с исключениями
             else:
                 with open('no_gprs_in_log.txt', 'a', encoding='UTF-8') as f_no_gprs:
-                    f_no_gprs.write(cur_uin, '\n')
+                    f_no_gprs.write('{0}\n'.format(cur_uin)
     with open('report_uin.txt', 'a', encoding='UTF-8') as f_report:
         f_report.write('END OF WORK')
