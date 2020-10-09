@@ -8,7 +8,7 @@ from datetime import datetime
 
 
 # Ишет файлы с расширение log, и записывает их названия в список
-# TODO: Дописать что бы искал только Debug_Log
+##############################Раскоментировать что бы искал по всех log файлах!!!!!!!!!!!!! Функцию ниже закоментировать
 # def search_log_files():
 #     log_files_list = []
 #     for root, dirs, files in os.walk("/opt"):
@@ -21,6 +21,8 @@ def search_log_files():
     log_files_list = []
     for root, dirs, files in os.walk("/opt"):
         for file in files:
+            ################Раскоментировать что бы искал во всех debug.log
+            # if file.startswith('GprsControlDebug.log'):
             if file.endswith('.log'):
                 # print(os.path.join(root, file))
                 log_files_list.append(os.path.join(root, file))
