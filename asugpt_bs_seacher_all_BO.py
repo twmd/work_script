@@ -97,6 +97,6 @@ if __name__ == '__main__':
             #Иначе заносим в фаил с исключениями
             else:
                 with open('no_gprs_in_log.txt', 'a', encoding='UTF-8') as f_no_gprs:
-                    f_no_gprs.write('{0}\n'.format(cur_uin)
+                    f_no_gprs.write('{0}\n'.format(cur_uin))
     with open('report_uin.txt', 'a', encoding='UTF-8') as f_report:
         f_report.write('END OF WORK')
