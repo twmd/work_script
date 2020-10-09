@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 # TODO: Дописать если uin не нашелся
 
 import os
