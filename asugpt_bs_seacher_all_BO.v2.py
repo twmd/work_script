@@ -48,6 +48,14 @@ def search_uin_bs_in_files(log_file_list, UIN):
         if gprs_control and gprs_control not in gprs_controls_list:
             gprs_controls_list.append(gprs_control)
             write_data_to_file(last_log_date,gprs_control,UIN)
+    if gprs_controls_list:
+        None
+    else:
+        with open('no_gprs_in_log_v2.txt', 'a', encoding='UTF-8') as f_no_gprs:
+            f_no_gprs.write('{0}\n'.format(UIN))
+            print('{} NOT FOUND IN LOG'.format(UIN))
+
+
     # return gprs_controls_list
 #Записывает данные в фаил
 def write_data_to_file(date, gprscontrol, UIN):
@@ -56,9 +64,9 @@ def write_data_to_file(date, gprscontrol, UIN):
         with open('report_uin_v2.txt', 'a', encoding='UTF-8') as f_report:
             f_report.write('{0} | {1} | {2}\n'.format(date, gprscontrol, UIN))
             print('{0} | {1} | {2}\n'.format(date, gprscontrol, UIN))
-    else:
-        with open('no_gprs_in_log_v2.txt', 'a', encoding='UTF-8') as f_no_gprs:
-            f_no_gprs.write('{0}\n'.format(cur_uin))
+    # else:
+    #     with open('no_gprs_in_log_v2.txt', 'a', encoding='UTF-8') as f_no_gprs:
+    #         f_no_gprs.write('{0}\n'.format(cur_uin))
 
 # выбирает дату из строки
 def search_last_date(log_string):
@@ -92,8 +100,8 @@ def file_is_exec(file):
 if __name__ == '__main__':
     # print(search_uin_bs_in_files(search_log_files()))
     gprs_control = ''
-    # file_is_exec('report_uin.txt')
-    # file_is_exec('no_gprs_in_log.txt')
+    file_is_exec('report_uin_v2.txt')
+    file_is_exec('no_gprs_in_log_v2.txt')
     log_file_list = search_log_files()
     with open ('bo_uin.txt', 'r', encoding='UTF-8') as f_uin:
         for line in f_uin:
