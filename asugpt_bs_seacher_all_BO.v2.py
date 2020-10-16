@@ -54,7 +54,8 @@ def write_data_to_file(date, gprscontrol, UIN):
     if gprscontrol:
         gprscontrol = rename_gprs_control(gprs_control)
         with open('report_uin_v2.txt', 'a', encoding='UTF-8') as f_report:
-            f_report.write('{0} | {1} | {2}'.format(date, gprscontrol, UIN))
+            f_report.write('{0} | {1} | {2}\n'.format(date, gprscontrol, UIN))
+            print('{0} | {1} | {2}\n'.format(date, gprscontrol, UIN))
     else:
         with open('no_gprs_in_log_v2.txt', 'a', encoding='UTF-8') as f_no_gprs:
             f_no_gprs.write('{0}\n'.format(cur_uin))
