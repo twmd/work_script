@@ -5,7 +5,6 @@
 
 import os
 import re
-import argparse
 from datetime import datetime
 
 
@@ -19,7 +18,6 @@ from datetime import datetime
 #                 # print(os.path.join(root, file))
 #                 log_files_list.append(os.path.join(root, file))
 #     return log_files_list
-#TODO: Дописать что бы была возможность выбора в каких log файлах искать
 def search_log_files():
     log_files_list = []
     for root, dirs, files in os.walk("/opt"):
@@ -77,13 +75,6 @@ def rename_gprs_control(gpts_control):
 def file_is_exec(file):
     if os.path.isfile(file):
         os.remove(file)
-#Парсер входящих аргументов.
-def arguments_parser():
-    parser = argparse.ArgumentParser(description='Парсер входящих аргументов')
-    parser.add_argument('-o', action='store', help='Ищет только один UIN, UIN вводится после опции')
-    parser.add_argument('-a', action='store_true', help='Ищет все UIN из файла')
-    # parser.add_argument('-l', action='store_true', help='Ищет все UIN из файла')
-    return parser.parse_args()
 
 if __name__ == '__main__':
     # print(search_uin_bs_in_files(search_log_files()))
@@ -94,14 +85,18 @@ if __name__ == '__main__':
     with open ('bo_uin.txt', 'r', encoding='UTF-8') as f_uin:
         for line in f_uin:
             cur_uin = line
+            # cur_uin.replace(' ', '')
             cur_uin = re.sub("^\s+|\n|\r|\s+$", '', cur_uin)
+            # print(cur_uin)
             gprs_control = search_uin_bs_in_files(log_file_list, cur_uin)
             #Если gpts_control не пустой, то пишем данные
             if gprs_control:
                 gprs_control = rename_gprs_control(gprs_control)
                 with open ('report_uin.txt', 'a', encoding='UTF-8') as f_report:
                     cur_time = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
+                    # f_report.write('{0} | {1} | {2}\n'.format(str(cur_time), cur_uin, gprs_control))
                     f_report.write('{0} | {1}\n'.format(cur_uin, gprs_control))
+                    # print('{0} | {1} | {2}'.format(str(cur_time), cur_uin, gprs_control))
                     print('{0} | {1}'.format(cur_uin, gprs_control))
             #Иначе заносим в фаил с исключениями
             else:
