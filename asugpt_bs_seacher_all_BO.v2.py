@@ -29,6 +29,7 @@ def search_log_files():
                 log_files_list.append(os.path.join(root, file))
     return log_files_list
 
+
 # Ищет совпадения в файле
 def search_uin_bs_in_files(log_file_list, UIN):
     # UIN = input('Введите UIN:')
@@ -47,26 +48,23 @@ def search_uin_bs_in_files(log_file_list, UIN):
                         gprs_control = file
         if gprs_control and gprs_control not in gprs_controls_list:
             gprs_controls_list.append(gprs_control)
-            write_data_to_file(last_log_date,gprs_control,UIN)
+            write_data_to_file(last_log_date, gprs_control, UIN)
     if gprs_controls_list:
         None
     else:
         with open('no_gprs_in_log_v2.txt', 'a', encoding='UTF-8') as f_no_gprs:
             f_no_gprs.write('{0}\n'.format(UIN))
-            print('{} NOT FOUND IN LOG'.format(UIN))
+            print('{} NOT FOUND IN LOG\n'.format(UIN))
 
 
-    # return gprs_controls_list
-#Записывает данные в фаил
+
+# Записывает данные в фаил
 def write_data_to_file(date, gprscontrol, UIN):
     if gprscontrol:
         gprscontrol = rename_gprs_control(gprscontrol)
         with open('report_uin_v2.txt', 'a', encoding='UTF-8') as f_report:
             f_report.write('{0} | {1} | {2}\n'.format(date, gprscontrol, UIN))
             print('{0} | {1} | {2}\n'.format(date, gprscontrol, UIN))
-    # else:
-    #     with open('no_gprs_in_log_v2.txt', 'a', encoding='UTF-8') as f_no_gprs:
-    #         f_no_gprs.write('{0}\n'.format(cur_uin))
 
 # выбирает дату из строки
 def search_last_date(log_string):
@@ -82,7 +80,9 @@ def compate_date(cur_date, log_date):
         return True
     else:
         return False
-#Заменяет путь к файлу логов, на название control
+
+
+# Заменяет путь к файлу логов, на название control
 def rename_gprs_control(gpts_control):
     gprs_control_list = ['gprscontrol_18221', 'gprscontrol_egts_gmon', 'gprscontrol_egts_prod', 'gprscontrol_egts_vega',
                          'gprscontrol_rs_old', 'gprscontrol_sec2', 'gprscontrol_stst', 'gprscontrol_18231',
@@ -92,33 +92,21 @@ def rename_gprs_control(gpts_control):
     for i in gprs_control_list:
         if i in gpts_control:
             return i
-#Проверяет существование файла, если есть удаляет.
+
+
+# Проверяет существование файла, если есть удаляет.
 def file_is_exec(file):
     if os.path.isfile(file):
         os.remove(file)
 
+
 if __name__ == '__main__':
-    # print(search_uin_bs_in_files(search_log_files()))
     gprs_control = ''
     file_is_exec('report_uin_v2.txt')
     file_is_exec('no_gprs_in_log_v2.txt')
     log_file_list = search_log_files()
-    with open ('bo_uin.txt', 'r', encoding='UTF-8') as f_uin:
+    with open('bo_uin.txt', 'r', encoding='UTF-8') as f_uin:
         for line in f_uin:
             cur_uin = line
-            # cur_uin.replace(' ', '')
             cur_uin = re.sub("^\s+|\n|\r|\s+$", '', cur_uin)
-            # print(cur_uin)
             search_uin_bs_in_files(log_file_list, cur_uin)
-            #Если gpts_control не пустой, то пишем данные
-    #         if gprs_control:
-    #             gprs_control = rename_gprs_control(gprs_control)
-    #             with open ('report_uin.txt', 'a', encoding='UTF-8') as f_report:
-    #                 f_report.write('{0} | {1}\n'.format(cur_uin, gprs_control))
-    #                 # print('{0} | {1}'.format(cur_uin, gprs_control))
-    #         #Иначе заносим в фаил с исключениями
-    #         else:
-    #             with open('no_gprs_in_log.txt', 'a', encoding='UTF-8') as f_no_gprs:
-    #                 f_no_gprs.write('{0}\n'.format(cur_uin))
-    # with open('report_uin.txt', 'a', encoding='UTF-8') as f_report:
-    #     f_report.write('END OF WORK')
