@@ -52,7 +52,7 @@ def search_uin_bs_in_files(log_file_list, UIN):
 #Записывает данные в фаил
 def write_data_to_file(date, gprscontrol, UIN):
     if gprscontrol:
-        gprscontrol = rename_gprs_control(gprs_control)
+        gprscontrol = rename_gprs_control(gprscontrol)
         with open('report_uin_v2.txt', 'a', encoding='UTF-8') as f_report:
             f_report.write('{0} | {1} | {2}\n'.format(date, gprscontrol, UIN))
             print('{0} | {1} | {2}\n'.format(date, gprscontrol, UIN))
