@@ -13,7 +13,7 @@ class Default:
     # Директория с логами
     log_dir = '/opt'
     # Проверять все log файли или только последний
-    last_log = False
+    last_log = True
 
 
 class Base:
