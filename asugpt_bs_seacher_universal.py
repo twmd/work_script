@@ -8,18 +8,37 @@ import argparse
 from datetime import datetime
 
 
-class Base:
-    def __init__(self, UIN):
-        self.UIN = UIN
+# Класс с переменными по умолчанию
+class Default:
+    # Директория с логами
+    log_dir = '/opt'
+    # Проверять все log файли или только последний
+    last_log = False
 
-    @staticmethod
-    def _search_log_files():
+
+class Base:
+    def __init__(self, uin, log_dir, last_log):
+        self.uin = uin
+        self.log_dir = log_dir
+        self.last_log = last_log
+
+    def search_log_files(self):
         log_files_list = []
-        for root, dirs, files in os.walk("/opt"):
+        for root, dirs, files in os.walk(self.log_dir):
             for file in files:
-                ################Раскоментировать что бы искал во всех debug.log
-                # if file.startswith('GprsControlDebug.log'):
-                if file.endswith('.log'):
-                    # print(os.path.join(root, file))
-                    log_files_list.append(os.path.join(root, file))
-        return log_files_list
+                if self.last_log:
+                    if file.endswith('GprsControlDebug.log'):
+                        log_files_list.append(os.path.join(root, file))
+                else:
+                    if file.startswith('GprsControlDebug.log'):
+                        log_files_list.append(os.path.join(root, file))
+        # return log_files_list
+        print(log_files_list)
+
+
+a = Base(123, Default.log_dir, Default.last_log)
+a.search_log_files()
+print('\n###################################\n')
+
+b = Base(123, Default.log_dir, False)
+b.search_log_files()
