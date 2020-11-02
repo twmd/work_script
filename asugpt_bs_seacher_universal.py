@@ -36,15 +36,13 @@ class Base:
         return log_files_list
 
     # Ищет дату из лог строки
-    @property
-    def _search_last_date(log_string):
+    def _search_last_date(self, log_string):
         regex_date = re.compile('\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}')
         date_match = re.search(regex_date, log_string)
         return date_match.group()
 
     # сравнивает дату, и True если дата лога больше.
-    @property
-    def _compate_date(cur_date, log_date):
+    def _compate_date(self, cur_date, log_date):
         log_date = datetime.strptime(log_date, '%Y-%m-%d %H:%M:%S')
         if cur_date < log_date:
             return True
@@ -70,11 +68,9 @@ class Base:
             # if gprs_control and gprs_control not in gprs_controls_list:
             if gprs_control not in gprs_controls_list:
                 gprs_controls_list.append(gprs_control)
-                ##################################################################################################
-                write_data_to_file(last_log_date, gprs_control, UIN)
-        if gprs_controls_list:
-            None
-        else:
-            with open('no_gprs_in_log_v2.txt', 'a', encoding='UTF-8') as f_no_gprs:
-                f_no_gprs.write('{0}\n'.format(UIN))
-                print('{} NOT FOUND IN LOG\n'.format(UIN))
+        return gprs_controls_list
+
+if __name__ == '__main__':
+    uin = input('Enter UIN:')
+    s_gprscontrol = Base(uin, Default.log_dir, Default.last_log)
+    print(s_gprscontrol.search_uin_bs_in_files())
