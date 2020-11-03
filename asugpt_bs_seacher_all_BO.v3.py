@@ -56,7 +56,6 @@ def search_uin_bs_in_files(log_file_list, UIN):
     print('\n')
     print('\n')
     print('\n')
-    break
 
 # Записывает данные в фаил
 def write_data_to_file(date, gprscontrol, UIN):
@@ -110,3 +109,4 @@ if __name__ == '__main__':
             cur_uin = line
             cur_uin = re.sub("^\s+|\n|\r|\s+$", '', cur_uin)
             search_uin_bs_in_files(log_file_list, cur_uin)
+            break
