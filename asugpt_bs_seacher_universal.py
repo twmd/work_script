@@ -4,7 +4,7 @@
 
 import os
 import re
-import argparse
+# import argparse
 from datetime import datetime
 
 
@@ -50,6 +50,7 @@ class Base:
             return False
 
     def search_uin_bs_in_files(self):
+        #TODO: Переписать так что бы при каждом вызове экземпляма он не формировался заново
         log_file_list = self._search_log_files()
         UIN_strig = '(EquipmentUin{{0; {0}}}'.format(self.uin)
         # Новая дата в log файле
