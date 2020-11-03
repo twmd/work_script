@@ -42,20 +42,14 @@ def search_uin_bs_in_files(log_file_list, UIN):
     for file in log_file_list:
         with open(file, 'r') as f:
             for line in f:
-                if UIN_strig in line and 'PointGeoData' in line:
+                if UIN_strig in line:
                     date_from_log = search_last_date(line)
                     if compate_date(last_log_date, date_from_log):
                         last_log_date = datetime.strptime(date_from_log, '%Y-%m-%d %H:%M:%S')
                         gprs_control = file
                         gprs_control = rename_gprs_control(gprs_control)
-                        data_dict[UIN].append({gprs_control:str(last_log_date)})
+                data_dict[UIN].append({gprs_control:str(last_log_date)})
 
-    print(UIN)
-    print(data_dict)
-    print('\n')
-    print('\n')
-    print('\n')
-    print('\n')
 
 # Записывает данные в фаил
 def write_data_to_file(date, gprscontrol, UIN):
