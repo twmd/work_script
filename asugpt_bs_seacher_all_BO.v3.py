@@ -48,14 +48,14 @@ def search_uin_bs_in_files(log_file_list, UIN):
                         last_log_date = datetime.strptime(date_from_log, '%Y-%m-%d %H:%M:%S')
                         gprs_control = file
                         gprs_control = rename_gprs_control(gprs_control)
-                        data_dict[UIN].append({gprs_control:last_log_date})
+                        data_dict[UIN].append({gprs_control:str(last_log_date)})
                         print(UIN)
-                        print(data_dict[UIN])
+                        print(data_dict)
                         print('\n')
                         print('\n')
                         print('\n')
                         print('\n')
-
+                        break
 
 # Записывает данные в фаил
 def write_data_to_file(date, gprscontrol, UIN):
