@@ -49,6 +49,18 @@ class Base:
         else:
             return False
 
+    def _rename_gprs_control(self, gpts_control):
+        gprs_control_list = ['gprscontrol_18221', 'gprscontrol_egts_gmon', 'gprscontrol_egts_prod',
+                             'gprscontrol_egts_vega',
+                             'gprscontrol_rs_old', 'gprscontrol_sec2', 'gprscontrol_stst', 'gprscontrol_18231',
+                             'gprscontrol_egts_h2h_gpos', 'gprscontrol_egts_ritm', 'gprscontrol_ritm', 'gprscontrol_sc',
+                             'gprscontrol_sec3', 'gprscontrol_ark', 'gprscontrol_egts_mircom', 'gprscontrol_egts_test',
+                             'gprscontrol_rs', 'gprscontrol_sec', 'gprscontrol_sms']
+        for i in gprs_control_list:
+            if i in gpts_control:
+                return i
+
+
     def search_uin_bs_in_files(self):
         #TODO: Переписать так что бы при каждом вызове экземпляма он не формировался заново
         log_file_list = self._search_log_files()
@@ -67,8 +79,10 @@ class Base:
                             gprs_control = file
             # Проверить что строка правильная.
             # if gprs_control and gprs_control not in gprs_controls_list:
-            if gprs_control not in gprs_controls_list:
-                gprs_controls_list.append(gprs_control)
+            if gprs_control:
+                gprs_control = self._rename_gprs_control(gprs_control)
+                if gprs_control not in gprs_controls_list:
+                    gprs_controls_list.append(gprs_control)
         return gprs_controls_list
 
 if __name__ == '__main__':
