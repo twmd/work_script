@@ -6,12 +6,12 @@ import os
 import re
 # import argparse
 from datetime import datetime
-
+from tqdm import tqdm
 
 # Класс с переменными по умолчанию
 class Default:
     # Директория с логами
-    log_dir = '/opt'
+    log_dir = 'c:\_tmp\ASUGPT\comm\opt'
     # Проверять все log файли или только последний
     last_log = True
 
@@ -57,7 +57,7 @@ class Base:
         last_log_date = datetime.strptime('1970-01-01 10:00:00', '%Y-%m-%d %H:%M:%S')
         gprs_control = ''
         gprs_controls_list = []
-        for file in log_file_list:
+        for file in tqdm(log_file_list):
             with open(file, 'r') as f:
                 for line in f:
                     if UIN_strig in line:
