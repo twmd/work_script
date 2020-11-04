@@ -7,6 +7,8 @@ import re
 # import argparse
 from datetime import datetime
 from tqdm import tqdm
+from collections import defaultdict
+
 
 # Класс с переменными по умолчанию
 class Default:
@@ -17,8 +19,8 @@ class Default:
 
 
 class Base:
-    def __init__(self, uin, log_dir, last_log):
-        self.uin = uin
+    def __init__(self, log_dir, last_log):
+        # self.uin = uin
         self.log_dir = log_dir
         self.last_log = last_log
 
@@ -60,18 +62,17 @@ class Base:
             if i in gpts_control:
                 return i
 
-
-    def search_uin_bs_in_files(self):
-        #TODO: Переписать так что бы при каждом вызове экземпляма он не формировался заново
+    def search_uin_bs_in_files(self, uin):
         log_file_list = self._search_log_files()
-        UIN_strig = '(EquipmentUin{{0; {0}}}'.format(self.uin)
+        UIN_strig = '(EquipmentUin{{0; {0}}}'.format(uin)
         # Новая дата в log файле
         last_log_date = datetime.strptime('1970-01-01 10:00:00', '%Y-%m-%d %H:%M:%S')
         gprs_control = ''
         gprs_controls_list = []
         for file in tqdm(log_file_list):
-            with open(file, 'r') as f:
-                for line in f:
+            with open(file, 'r', encoding='UTF-8') as f:
+                log_in_memory = f.readlines()
+                for line in log_in_memory:
                     if UIN_strig in line:
                         date_from_log = self._search_last_date(line)
                         if self._compate_date(last_log_date, date_from_log):
@@ -79,13 +80,34 @@ class Base:
                             gprs_control = file
             # Проверить что строка правильная.
             # if gprs_control and gprs_control not in gprs_controls_list:
+            del log_in_memory
             if gprs_control:
                 gprs_control = self._rename_gprs_control(gprs_control)
                 if gprs_control not in gprs_controls_list:
                     gprs_controls_list.append(gprs_control)
         return gprs_controls_list
 
+    def search_all_uins_in_files(self, set_uins):
+        data_dict = defaultdict(list)
+        log_file_list = self._search_log_files()
+        last_log_date = datetime.strptime('1970-01-01 10:00:00', '%Y-%m-%d %H:%M:%S')
+        gprs_control = ''
+        for file in tqdm(log_file_list):
+            with open(file, 'r', encoding='UTF-8') as f:
+                log_in_memory = f.readlines()
+                for uin_number in set_uins:
+                    uin_strig = '(EquipmentUin{{0; {0}}}'.format(uin_number)
+                    for line in log_in_memory:
+                        if uin_strig in line:
+                            date_from_log = self._search_last_date(line)
+                            if self._compate_date(last_log_date, date_from_log):
+                                last_log_date = datetime.strptime(date_from_log, '%Y-%m-%d %H:%M:%S')
+                                gprs_control = self._rename_gprs_control(file)
+                                data_dict[uin_number].append({last_log_date: gprs_control})
+            del log_in_memory
+        return data_dict
+
 if __name__ == '__main__':
     uin = input('Enter UIN:')
-    s_gprscontrol = Base(uin, Default.log_dir, Default.last_log)
-    print(s_gprscontrol.search_uin_bs_in_files())
+    s_gprscontrol = Base(Default.log_dir, Default.last_log)
+    print(s_gprscontrol.search_uin_bs_in_files(uin))
